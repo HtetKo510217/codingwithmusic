@@ -7,8 +7,10 @@ const pauseBtnTag = document.getElementsByClassName("pauseBtn")[0];
 const nextBtnTag = document.getElementsByClassName("nextBtn")[0];
 const currentProgressTag = document.getElementsByClassName("currentProgress")[0];
 const tracks = [
+    {trackId:"music/El Phyu .mp3" , title:"အယ်ဖြူ နောက်ဆုံး"},
     {trackId:"music/AlanWalker.mp3" , title:"Lost Control Alan Walker"},
     {trackId:"music/Htoo Eain Thin.mp3" , title:"Htoo Eain Thin"},
+    {trackId:"music/Lay Phyu.mp3" , title:"lay phyu အသည်းကွဲသီးချင်းသစ်"},
     {trackId:"music/Jewelmp3.mp3" , title:"Jewl"},
     {trackId:"music/mother.mp3" , title:"အမေ တစ်ခု သားတစ်ခု"},
     {trackId:"music/The Ants.mp3" , title:"သီချင်းများနဲ.ကခုန်ခြင်း"},
@@ -22,11 +24,7 @@ for (let i = 0; i<tracks.length; i++) {
         audioTag.play();
         isPlaying = true;
         updatePlayAndPauseBtn();
-    });
-    playBtnTag.addEventListener("click",()=> {
-        audioTag.play();
-        isPlaying = true;
-        updatePlayAndPauseBtn();
+        currentPlayingIndex = i;
     });
     pauseBtnTag.addEventListener("click",()=> {
         audioTag.pause();
@@ -41,7 +39,7 @@ for (let i = 0; i<tracks.length; i++) {
         trackId = tracks[1 + i].trackId;
         audioTag.src = trackId;
         audioTag.play();
-    });
+    },false);
 }
 let duration = 0;
 let durationText = "";
@@ -80,3 +78,41 @@ const updatePlayAndPauseBtn = ()=> {
         playBtnTag.style.display = "inline";
     }
 }
+let currentPlayingIndex = 0;
+playBtnTag.addEventListener("click",()=> {
+    const currentTime = Math.floor(audioTag.currentTime);
+    isPlaying = true;
+    if(currentTime == 0) {
+        const firstSongId = tracks[currentPlayingIndex].trackId;
+        audioTag.src = firstSongId;
+        audioTag.play();
+        updatePlayAndPauseBtn();
+    }else {
+        audioTag.play();
+        updatePlayAndPauseBtn();
+    }
+});
+previousBtnTag.addEventListener("click",function(){
+    if(currentPlayingIndex === 0){
+        return
+    }else{
+        currentPlayingIndex -=1;
+        const songIdToPlay = tracks[currentPlayingIndex].trackId;
+        audioTag.src = songIdToPlay;
+        audioTag.play();
+        isPlaying = true;
+        updatePlayAndPauseBtn();
+    }
+});
+nextBtnTag.addEventListener("click",function(){
+    if(currentPlayingIndex === tracks.length -1){
+        return
+    }else{
+        currentPlayingIndex +=1;
+        const songIdToPlay = tracks[currentPlayingIndex].trackId;
+        audioTag.src = songIdToPlay;
+        audioTag.play();
+        isPlaying = true;
+        updatePlayAndPauseBtn();
+    }
+});

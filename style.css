@@ -1,12 +1,17 @@
+body{
+    background: url("music_bg.jpeg");
+}
 .container {
     max-width: 1080px;
-    background: rgb(161, 165, 162);
     margin: 0 auto;
     height: 100vh;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
+}
+.title {
+    color: #0ebb1c;
 }
 .trackItem {
     color: #ff0;
@@ -19,7 +24,7 @@
     font-size: 40px;
 }
 .controls {
-    font-size: 30px;
+    font-size: 34px;
     color: #fff;
     margin: 20px 40px;
     cursor: pointer;
